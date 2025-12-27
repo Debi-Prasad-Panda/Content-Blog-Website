@@ -100,9 +100,7 @@ interface Project {
      tags: string[];
 }
 
-function FlipCard({ project, onClick }: { project: Project; onClick: () => void }) {
-     const [isFlipped, setIsFlipped] = useState(false);
-
+function GlassmorphicCard({ project, onClick }: { project: Project; onClick: () => void }) {
      return (
           <motion.div
                layout
@@ -110,108 +108,181 @@ function FlipCard({ project, onClick }: { project: Project; onClick: () => void 
                animate={{ opacity: 1, scale: 1 }}
                exit={{ opacity: 0, scale: 0.9 }}
                transition={{ duration: 0.4 }}
-               className="perspective-1000"
+               className="glassmorphic-card-wrapper"
           >
-               <motion.div
-                    className="relative w-full aspect-[4/5] cursor-pointer preserve-3d"
-                    onClick={() => setIsFlipped(!isFlipped)}
-                    animate={{ rotateY: isFlipped ? 180 : 0 }}
-                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    style={{ transformStyle: 'preserve-3d' }}
+               <div
+                    className="glassmorphic-card"
+                    style={{
+                         position: 'relative',
+                         display: 'flex',
+                         flexDirection: 'column',
+                         gap: '1rem',
+                         padding: '1.5rem',
+                         width: '100%',
+                         backgroundColor: 'hsla(240, 15%, 9%, 1)',
+                         backgroundImage: `
+                              radial-gradient(at 88% 40%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
+                              radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
+                              radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
+                              radial-gradient(at 0% 64%, hsla(263, 93%, 56%, 1) 0px, transparent 85%),
+                              radial-gradient(at 41% 94%, hsla(284, 100%, 84%, 1) 0px, transparent 85%),
+                              radial-gradient(at 100% 99%, hsla(306, 100%, 57%, 1) 0px, transparent 85%)
+                         `,
+                         borderRadius: '1rem',
+                         boxShadow: '0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset',
+                         overflow: 'hidden',
+                    }}
                >
-                    {/* Front */}
+                    {/* Animated Border */}
                     <div
-                         className="absolute inset-0 rounded-2xl overflow-hidden backface-hidden"
-                         style={{ backfaceVisibility: 'hidden' }}
-                    >
-                         <div
-                              className="absolute inset-0"
-                              style={{
-                                   background: `linear-gradient(135deg, ${project.thumbnail}40 0%, ${project.thumbnail}10 100%)`,
-                              }}
-                         />
-                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-
-                         <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                              <span
-                                   className="text-xs font-medium uppercase tracking-wider mb-2"
-                                   style={{ color: project.thumbnail }}
-                              >
-                                   {project.category}
-                              </span>
-                              <h3 className="text-xl font-display font-semibold text-white mb-2">
-                                   {project.title}
-                              </h3>
-                              <p className="text-sm text-white/60">
-                                   Click to see details
-                              </p>
-                         </div>
-
-                         {/* Hover indicator */}
-                         <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 backdrop-blur flex items-center justify-center">
-                              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                              </svg>
-                         </div>
-                    </div>
-
-                    {/* Back */}
-                    <div
-                         className="absolute inset-0 rounded-2xl overflow-hidden backface-hidden bg-[var(--card-bg)] border border-[var(--glass-border)] p-6 flex flex-col"
+                         className="card-border"
                          style={{
-                              backfaceVisibility: 'hidden',
-                              transform: 'rotateY(180deg)',
+                              overflow: 'hidden',
+                              pointerEvents: 'none',
+                              position: 'absolute',
+                              zIndex: -10,
+                              top: '50%',
+                              left: '50%',
+                              transform: 'translate(-50%, -50%)',
+                              width: 'calc(100% + 2px)',
+                              height: 'calc(100% + 2px)',
+                              backgroundImage: 'linear-gradient(0deg, hsl(0, 0%, 100%) -50%, hsl(0, 0%, 40%) 100%)',
+                              borderRadius: '1rem',
                          }}
-                    >
+                    />
+
+                    {/* Title Container */}
+                    <div>
                          <span
-                              className="text-xs font-medium uppercase tracking-wider mb-2"
+                              className="text-xs font-medium uppercase tracking-wider mb-1 block"
                               style={{ color: project.thumbnail }}
                          >
                               {project.category}
                          </span>
-                         <h3 className="text-xl font-display font-semibold mb-2">
+                         <h3
+                              className="font-display font-semibold"
+                              style={{ fontSize: '1.25rem', color: 'hsl(0, 0%, 100%)' }}
+                         >
                               {project.title}
                          </h3>
+                         <p
+                              className="mt-1"
+                              style={{
+                                   fontSize: '0.75rem',
+                                   color: 'hsl(0, 0%, 83%)',
+                                   width: '80%',
+                              }}
+                         >
+                              {project.description.substring(0, 80)}...
+                         </p>
+                    </div>
 
-                         <div className="flex-1 overflow-auto">
-                              <div className="space-y-3 text-sm">
-                                   <div>
-                                        <span className="text-[var(--text-muted)]">Role:</span>
-                                        <p className="text-[var(--text-primary)]">{project.role}</p>
-                                   </div>
-                                   <div>
-                                        <span className="text-[var(--text-muted)]">Outcome:</span>
-                                        <p className="text-[var(--accent-primary)] font-medium">{project.outcome}</p>
-                                   </div>
-                                   <div>
-                                        <span className="text-[var(--text-muted)]">Description:</span>
-                                        <p className="text-[var(--text-secondary)]">{project.description}</p>
-                                   </div>
-                              </div>
-                         </div>
+                    {/* Divider */}
+                    <hr
+                         style={{
+                              width: '100%',
+                              height: '1px',
+                              backgroundColor: 'hsl(240, 9%, 17%)',
+                              border: 'none',
+                              margin: '0.25rem 0',
+                         }}
+                    />
 
-                         <div className="mt-4 flex flex-wrap gap-2">
-                              {project.tags.map((tag) => (
+                    {/* Features List */}
+                    <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
+                         <li style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
+                              <span
+                                   style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        width: '1.25rem',
+                                        height: '1.25rem',
+                                        backgroundColor: 'hsl(266, 92%, 58%)',
+                                        borderRadius: '50%',
+                                   }}
+                              >
+                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="hsl(240, 15%, 9%)" style={{ width: '0.875rem', height: '0.875rem' }}>
+                                        <path fillRule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clipRule="evenodd" />
+                                   </svg>
+                              </span>
+                              <span style={{ fontSize: '0.875rem', color: 'hsl(0, 0%, 100%)' }}>
+                                   Role: {project.role}
+                              </span>
+                         </li>
+                         <li style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
+                              <span
+                                   style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        width: '1.25rem',
+                                        height: '1.25rem',
+                                        backgroundColor: 'hsl(266, 92%, 58%)',
+                                        borderRadius: '50%',
+                                   }}
+                              >
+                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="hsl(240, 15%, 9%)" style={{ width: '0.875rem', height: '0.875rem' }}>
+                                        <path fillRule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clipRule="evenodd" />
+                                   </svg>
+                              </span>
+                              <span style={{ fontSize: '0.875rem', color: 'hsl(266, 92%, 58%)' }}>
+                                   {project.outcome}
+                              </span>
+                         </li>
+                         {project.tags.slice(0, 3).map((tag) => (
+                              <li key={tag} style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
                                    <span
-                                        key={tag}
-                                        className="px-2 py-1 text-xs rounded-full bg-[var(--bg-tertiary)] text-[var(--text-muted)]"
+                                        style={{
+                                             display: 'flex',
+                                             justifyContent: 'center',
+                                             alignItems: 'center',
+                                             width: '1.25rem',
+                                             height: '1.25rem',
+                                             backgroundColor: 'hsl(266, 92%, 58%)',
+                                             borderRadius: '50%',
+                                        }}
                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="hsl(240, 15%, 9%)" style={{ width: '0.875rem', height: '0.875rem' }}>
+                                             <path fillRule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clipRule="evenodd" />
+                                        </svg>
+                                   </span>
+                                   <span style={{ fontSize: '0.875rem', color: 'hsl(0, 0%, 100%)' }}>
                                         {tag}
                                    </span>
-                              ))}
-                         </div>
+                              </li>
+                         ))}
+                    </ul>
 
-                         <button
-                              onClick={(e) => {
-                                   e.stopPropagation();
-                                   onClick();
-                              }}
-                              className="mt-4 btn btn-primary text-sm"
-                         >
-                              View Case Study
-                         </button>
-                    </div>
-               </motion.div>
+                    {/* Gradient Button */}
+                    <button
+                         onClick={onClick}
+                         style={{
+                              cursor: 'pointer',
+                              padding: '0.75rem',
+                              width: '100%',
+                              backgroundImage: 'linear-gradient(0deg, rgba(94, 58, 238, 1) 0%, rgba(197, 107, 240, 1) 100%)',
+                              fontSize: '0.875rem',
+                              fontWeight: 500,
+                              color: 'hsl(0, 0%, 100%)',
+                              border: 0,
+                              borderRadius: '9999px',
+                              boxShadow: 'inset 0 -2px 25px -4px hsl(0, 0%, 100%)',
+                              marginTop: 'auto',
+                              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                         }}
+                         onMouseEnter={(e) => {
+                              e.currentTarget.style.transform = 'translateY(-2px)';
+                              e.currentTarget.style.boxShadow = 'inset 0 -2px 25px -4px hsl(0, 0%, 100%), 0 10px 30px -10px rgba(168, 85, 247, 0.5)';
+                         }}
+                         onMouseLeave={(e) => {
+                              e.currentTarget.style.transform = 'translateY(0)';
+                              e.currentTarget.style.boxShadow = 'inset 0 -2px 25px -4px hsl(0, 0%, 100%)';
+                         }}
+                    >
+                         View Case Study
+                    </button>
+               </div>
           </motion.div>
      );
 }
@@ -356,8 +427,8 @@ export default function WorkPage() {
                                              <button
                                                   onClick={() => setActiveCategory(category)}
                                                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === category
-                                                            ? 'bg-[var(--accent-primary)] text-white'
-                                                            : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                                                       ? 'bg-[var(--accent-primary)] text-white'
+                                                       : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                                                        }`}
                                              >
                                                   {category}
@@ -375,7 +446,7 @@ export default function WorkPage() {
                          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                               <AnimatePresence mode="popLayout">
                                    {filteredProjects.map((project) => (
-                                        <FlipCard
+                                        <GlassmorphicCard
                                              key={project.id}
                                              project={project}
                                              onClick={() => setSelectedProject(project)}
