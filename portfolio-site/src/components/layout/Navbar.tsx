@@ -18,24 +18,44 @@ const navLinks = [
 
 export default function Navbar() {
      const [isScrolled, setIsScrolled] = useState(false);
+     const [isHidden, setIsHidden] = useState(false);
+     const [lastScrollY, setLastScrollY] = useState(0);
      const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
      const pathname = usePathname();
 
      useEffect(() => {
           const handleScroll = () => {
-               setIsScrolled(window.scrollY > 20);
+               const currentScrollY = window.scrollY;
+
+               // Update scrolled state
+               setIsScrolled(currentScrollY > 20);
+
+               // Hide navbar when scrolling down, show when scrolling up or at top
+               if (currentScrollY < 100) {
+                    // Near the top of the page - always show
+                    setIsHidden(false);
+               } else if (currentScrollY > lastScrollY) {
+                    // Scrolling down - hide
+                    setIsHidden(true);
+               } else if (currentScrollY < lastScrollY) {
+                    // Scrolling up - show
+                    setIsHidden(false);
+               }
+               // If not scrolling, maintain current state
+
+               setLastScrollY(currentScrollY);
           };
 
-          window.addEventListener('scroll', handleScroll);
+          window.addEventListener('scroll', handleScroll, { passive: true });
           return () => window.removeEventListener('scroll', handleScroll);
-     }, []);
+     }, [lastScrollY]);
 
      return (
           <>
                <motion.header
                     initial={{ y: -100 }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    animate={{ y: isHidden ? -100 : 0 }}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                     className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'glass-strong py-3' : 'py-5'
                          }`}
                >
@@ -62,8 +82,8 @@ export default function Navbar() {
                                         <Link
                                              href={link.href}
                                              className={`relative px-4 py-2 text-sm font-medium transition-colors ${pathname === link.href
-                                                       ? 'text-[var(--accent-primary)]'
-                                                       : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                                                  ? 'text-[var(--accent-primary)]'
+                                                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                                                   }`}
                                         >
                                              {link.label}
@@ -130,8 +150,8 @@ export default function Navbar() {
                                                        href={link.href}
                                                        onClick={() => setIsMobileMenuOpen(false)}
                                                        className={`block py-3 text-2xl font-display font-semibold transition-colors ${pathname === link.href
-                                                                 ? 'text-gradient'
-                                                                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                                                            ? 'text-gradient'
+                                                            : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                                                             }`}
                                                   >
                                                        {link.label}

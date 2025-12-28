@@ -33,7 +33,7 @@ export default function TextReveal({
                y: 0,
                rotateX: 0,
                transition: {
-                    type: 'spring',
+                    type: 'spring' as const,
                     damping: 12,
                     stiffness: 100,
                     duration: duration,
@@ -44,7 +44,7 @@ export default function TextReveal({
                y: 40,
                rotateX: 90,
                transition: {
-                    type: 'spring',
+                    type: 'spring' as const,
                     damping: 12,
                     stiffness: 100,
                },

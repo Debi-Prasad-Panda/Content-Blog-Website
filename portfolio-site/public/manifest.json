@@ -1,0 +1,24 @@
+{
+     "name": "Lumina Narrative - Content Strategist & Writer",
+     "short_name": "Lumina Narrative",
+     "description": "Portfolio website showcasing content strategy, writing, and brand storytelling expertise",
+     "start_url": "/",
+     "display": "standalone",
+     "background_color": "#050505",
+     "theme_color": "#A855F7",
+     "orientation": "portrait-primary",
+     "icons": [
+          {
+               "src": "/favicon.ico",
+               "sizes": "any",
+               "type": "image/x-icon"
+          }
+     ],
+     "categories": [
+          "portfolio",
+          "business",
+          "lifestyle"
+     ],
+     "lang": "en-US",
+     "dir": "ltr"
+}

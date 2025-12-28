@@ -198,7 +198,7 @@ function GlassmorphicCard({ project, onClick }: { project: Project; onClick: () 
                                         alignItems: 'center',
                                         width: '1.25rem',
                                         height: '1.25rem',
-                                        backgroundColor: 'hsl(266, 92%, 58%)',
+                                         backgroundColor: 'hsl(266, 92%, 58%)',
                                         borderRadius: '50%',
                                    }}
                               >
@@ -218,7 +218,7 @@ function GlassmorphicCard({ project, onClick }: { project: Project; onClick: () 
                                         alignItems: 'center',
                                         width: '1.25rem',
                                         height: '1.25rem',
-                                        backgroundColor: 'hsl(266, 92%, 58%)',
+                                        backgroundColor: 'hsl(43, 96%, 56%)',
                                         borderRadius: '50%',
                                    }}
                               >
@@ -226,7 +226,7 @@ function GlassmorphicCard({ project, onClick }: { project: Project; onClick: () 
                                         <path fillRule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clipRule="evenodd" />
                                    </svg>
                               </span>
-                              <span style={{ fontSize: '0.875rem', color: 'hsl(266, 92%, 58%)' }}>
+                               <span className="gold-spark" style={{ fontSize: '0.875rem', color: 'hsl(43, 96%, 56%)' }}>
                                    {project.outcome}
                               </span>
                          </li>
@@ -393,14 +393,14 @@ export default function WorkPage() {
           : projects.filter((p) => p.category === activeCategory);
 
      return (
-          <div className="pt-20">
+          <div className="pt-12">
                {/* Header */}
-               <section className="section pb-0">
+               <section className="py-8">
                     <div className="container">
                          <motion.div
                               initial={{ opacity: 0, y: 20 }}
                               animate={{ opacity: 1, y: 0 }}
-                              className="text-center max-w-3xl mx-auto mb-12"
+                              className="text-center max-w-3xl mx-auto mb-4"
                          >
                               <span className="text-sm font-medium uppercase tracking-wider text-[var(--accent-primary)] mb-2 block">
                                    Portfolio
@@ -419,7 +419,7 @@ export default function WorkPage() {
                               initial={{ opacity: 0, y: 20 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ delay: 0.2 }}
-                              className="sticky top-20 z-30 py-4 -mx-4 px-4 glass-strong rounded-xl mb-8"
+                              className="sticky top-20 z-30 py-4 -mx-4 px-4 glass-strong rounded-xl mb-4"
                          >
                               <div className="flex flex-wrap justify-center gap-2">
                                    {categories.map((category) => (
@@ -441,7 +441,7 @@ export default function WorkPage() {
                </section>
 
                {/* Projects Grid */}
-               <section className="section pt-0">
+               <section className="pb-12">
                     <div className="container">
                          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                               <AnimatePresence mode="popLayout">

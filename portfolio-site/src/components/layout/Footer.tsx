@@ -50,8 +50,8 @@ export default function Footer() {
      return (
           <footer className="relative border-t border-[var(--glass-border)] bg-[var(--bg-secondary)]">
                {/* CTA Section */}
-               <div className="container py-16 md:py-24">
-                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+               <div className="container pt-32 pb-24 md:pt-48 md:pb-40">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-12 md:gap-16">
                          {/* Left - CTA */}
                          <div className="max-w-md">
                               <motion.h2
@@ -82,10 +82,10 @@ export default function Footer() {
                          </div>
 
                          {/* Right - Links & Resume */}
-                         <div className="flex flex-col sm:flex-row gap-12">
+                         <div className="flex flex-col sm:flex-row gap-16">
                               {/* Quick Links */}
                               <div>
-                                   <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-4">
+                                   <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-4 mt-8 sm:mt-0">
                                         Navigation
                                    </h3>
                                    <ul className="space-y-2">
@@ -106,7 +106,7 @@ export default function Footer() {
 
                               {/* Resume & Social */}
                               <div>
-                                   <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-4">
+                                   <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-4 mt-8 sm:mt-0">
                                         Connect
                                    </h3>
                                    <motion.a
@@ -145,7 +145,7 @@ export default function Footer() {
 
                {/* Bottom Bar */}
                <div className="border-t border-[var(--glass-border)]">
-                    <div className="container py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="container py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
                          <p className="text-sm text-[var(--text-muted)]">
                               © {currentYear} Lumina Narrative. All rights reserved.
                          </p>
